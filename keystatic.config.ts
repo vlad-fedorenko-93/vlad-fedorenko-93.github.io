@@ -1,11 +1,16 @@
 import { config, fields, collection } from '@keystatic/core';
+import { wrapper } from '@keystatic/core/content-components'
+
 
 export default config({
   storage: {
-    kind: 'local',
+    kind: 'cloud',
+  },
+  cloud: {
+    project: 'vladyslav-fedorenko/vlad-fedorenko-93',
   },
 
- 
+
   collections: {
 
     // Blog post collection config
@@ -44,6 +49,12 @@ export default config({
               directory: 'src/assets/images/posts',
               publicPath: '../../assets/images/posts/',
             },
+          },
+          components: {
+            callout: wrapper({
+              label: 'Callout',
+              schema: {},
+            }),
           },
         }),
       },
@@ -93,6 +104,7 @@ export default config({
               publicPath: '../../assets/images/portfolio/',
             },
           },
+          
         }),
       },
     }),

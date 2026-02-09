@@ -1,9 +1,14 @@
-import { defineMarkdocConfig } from '@astrojs/markdoc/config';
+import { defineMarkdocConfig, component } from '@astrojs/markdoc/config';
 import shiki from '@astrojs/markdoc/shiki';
 import { addCopyButton } from 'shiki-transformer-copy-button'
 
 
 export default defineMarkdocConfig({
+  tags: {
+    callout: {
+      render: component('./src/components/Callout.astro'),
+    }
+  },
   extends: [
     shiki({
       // Choose from Shiki's built-in themes (or add your own)
