@@ -4,12 +4,13 @@ import { wrapper } from '@keystatic/core/content-components'
 
 export default config({
   storage: {
-    kind: 'cloud',
-  },
-  cloud: {
-    project: 'vladyslav-fedorenko/vlad-fedorenko-93',
-  },
+    kind: 'github',
+    repo: {
+      owner: 'vlad-fedorenko-93',
+      name: 'vlad-fedorenko-93.github.io',
+    }
 
+  },
 
   collections: {
 
