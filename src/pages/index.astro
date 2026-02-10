@@ -8,7 +8,6 @@ import Button from "../components/Button.svelte";
 import CaseStudyItem from "../components/CaseStudyItem.svelte";
 import { Image } from "astro:assets";
 
-
 const posts = await getCollection("posts");
 const postPreview = posts.slice(-2);
 
@@ -16,11 +15,11 @@ const portfolio = await getCollection("portfolio");
 const portfolioPreview = portfolio.slice(-2);
 
 const portfolioThumbnails = import.meta.glob<{ default: ImageMetadata }>(
-  "../assets/thumbnails/portfolio/**/thumbnail.avif",
+  "../assets/thumbnails/portfolio/**/thumbnail.{avif,jpg,jpeg,png,webp}",
   { eager: true },
 );
 const postThumbnails = import.meta.glob<{ default: ImageMetadata }>(
-  "../assets/thumbnails/posts/**/thumbnail.avif",
+  "../assets/thumbnails/posts/**/thumbnail.{avif,jpg,jpeg,png,webp}",
   { eager: true },
 );
 ---
@@ -43,23 +42,26 @@ const postThumbnails = import.meta.glob<{ default: ImageMetadata }>(
       </div>
       <div class="cards col-span-3 grid grid-cols-2 gap-4">
         {
-          portfolioPreview.map((caseStudy) => (
-            <CaseStudyItem
-              title={caseStudy.data.title}
-              slug={`/portfolio/${caseStudy.slug}`}
-              description={caseStudy.data.description}
-              date={caseStudy.data.date}
-            >
-              <Image
-                src={
-                  portfolioThumbnails[
-                    `../assets/thumbnails/portfolio/${caseStudy.slug}/thumbnail.avif`
-                  ]?.default
-                }
-                alt={caseStudy.data.title}
-              />
-            </CaseStudyItem>
-          ))
+          portfolioPreview.map((caseStudy) => {
+            const thumbnailKey = Object.keys(portfolioThumbnails).find((path) =>
+              path.includes(`/portfolio/${caseStudy.slug}/thumbnail.`),
+            );
+            return (
+              <CaseStudyItem
+                title={caseStudy.data.title}
+                slug={`/portfolio/${caseStudy.slug}`}
+                description={caseStudy.data.description}
+                date={caseStudy.data.date}
+              >
+                {thumbnailKey && (
+                  <Image
+                    src={portfolioThumbnails[thumbnailKey].default}
+                    alt={caseStudy.data.title}
+                  />
+                )}
+              </CaseStudyItem>
+            );
+          })
         }
       </div>
     </div>
@@ -77,21 +79,26 @@ const postThumbnails = import.meta.glob<{ default: ImageMetadata }>(
       </div>
       <div class="cards col-span-3 grid grid-cols-2 gap-4">
         {
-          postPreview.map((post) => (
-            <CaseStudyItem
-              title={post.data.title}
-              slug={`/posts/${post.slug}`}
-              description={post.data.description}
-              date={post.data.date}
-            >
-              <Image
-                src={postThumbnails[
-                    `../assets/thumbnails/posts/${post.slug}/thumbnail.avif`
-                  ]?.default}
-                alt={post.data.title}
-              />
-            </CaseStudyItem>
-          ))
+          postPreview.map((post) => {
+            const thumbnailKey = Object.keys(postThumbnails).find((path) =>
+              path.includes(`/posts/${post.slug}/thumbnail.`),
+            );
+            return (
+              <CaseStudyItem
+                title={post.data.title}
+                slug={`/posts/${post.slug}`}
+                description={post.data.description}
+                date={post.data.date}
+              >
+                {thumbnailKey && (
+                  <Image
+                    src={postThumbnails[thumbnailKey].default}
+                    alt={post.data.title}
+                  />
+                )}
+              </CaseStudyItem>
+            );
+          })
         }
       </div>
     </div>
@@ -114,37 +121,37 @@ const postThumbnails = import.meta.glob<{ default: ImageMetadata }>(
   }
 
   @media (max-width: 900px) {
-        .content {
-            grid-template-rows: fit-content fit-content;
-            grid-template-columns: 1fr;
-            padding: 4rem 0;
-        }
-
-        .content div {
-            grid-column: auto;
-            grid-row: auto;
-        }
-
-        .content .title {
-          margin-bottom: 4rem;
-        }
-
-        .content .title h2 {
-          font-size: 2.5rem;
-          width: 100%;
-        }
-
-        .content .title p {
-          width: 100%;
-        }
-
-        .content .cards {
-          grid-template-columns: 1fr;
-          grid-template-rows: auto;
-        }
-
-        .content div h1 {
-            font-size: 2.5rem;
-        }
+    .content {
+      grid-template-rows: fit-content fit-content;
+      grid-template-columns: 1fr;
+      padding: 4rem 0;
     }
+
+    .content div {
+      grid-column: auto;
+      grid-row: auto;
+    }
+
+    .content .title {
+      margin-bottom: 4rem;
+    }
+
+    .content .title h2 {
+      font-size: 2.5rem;
+      width: 100%;
+    }
+
+    .content .title p {
+      width: 100%;
+    }
+
+    .content .cards {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+    }
+
+    .content div h1 {
+      font-size: 2.5rem;
+    }
+  }
 </style>

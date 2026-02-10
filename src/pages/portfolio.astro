@@ -6,7 +6,7 @@ import { getCollection } from "astro:content";
 import type { ImageMetadata } from "astro";
 
 const thumbnails = import.meta.glob<{ default: ImageMetadata }>(
-  "../assets/thumbnails/portfolio/**/thumbnail.avif",
+  "../assets/thumbnails/portfolio/**/thumbnail.{avif,jpg,jpeg,png,webp}",
   { eager: true },
 );
 
@@ -21,25 +21,28 @@ const portfolio = await getCollection("portfolio");
     <div class="cards-container min-h-[calc(100vh-20rem)] m-auto w-3/5 py-20">
       <div class="cards grid grid-cols-2 auto-rows-fr gap-4">
         {
-          portfolio.map((caseStudy) => (
-            <CaseStudyItem
-              title={caseStudy.data.title}
-              slug={`/portfolio/${caseStudy.slug}`}
-              description={caseStudy.data.description}
-            >
-              <Image
-                src={
-                  thumbnails[
-                    `../assets/thumbnails/portfolio/${caseStudy.slug}/thumbnail.avif`
-                  ].default
-                }
-                alt={caseStudy.data.title}
-                priority
-                fit="cover"
-                width={808}
-              />
-            </CaseStudyItem>
-          ))
+          portfolio.map((caseStudy) => {
+            const thumbnailKey = Object.keys(thumbnails).find((path) =>
+              path.includes(`/portfolio/${caseStudy.slug}/thumbnail.`),
+            );
+            return (
+              <CaseStudyItem
+                title={caseStudy.data.title}
+                slug={`/portfolio/${caseStudy.slug}`}
+                description={caseStudy.data.description}
+              >
+                {thumbnailKey && (
+                  <Image
+                    src={thumbnails[thumbnailKey].default}
+                    alt={caseStudy.data.title}
+                    priority
+                    fit="cover"
+                    width={808}
+                  />
+                )}
+              </CaseStudyItem>
+            );
+          })
         }
       </div>
     </div>

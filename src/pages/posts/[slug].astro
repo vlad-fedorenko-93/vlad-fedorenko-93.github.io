@@ -54,12 +54,16 @@ const { Content } = await post.render();
 
 // Thumbnail
 const thumbnailModules = import.meta.glob<{ default: ImageMetadata }>(
-  "../../assets/thumbnails/posts/**/thumbnail.avif",
+  "../../assets/thumbnails/posts/**/thumbnail.{avif,jpg,jpeg,png,webp}",
 );
-const thumbnail =
-  await thumbnailModules[
-    `../../assets/thumbnails/posts/${post.slug}/thumbnail.avif`
-  ]?.();
+
+const thumbnailKey = Object.keys(thumbnailModules).find((path) =>
+  path.includes(`/posts/${post.slug}/thumbnail.`),
+);
+
+const thumbnail = thumbnailKey
+  ? await thumbnailModules[thumbnailKey]?.()
+  : undefined;
 ---
 
 <Layout title={post.data.title}>
