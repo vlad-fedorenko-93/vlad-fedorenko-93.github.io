@@ -39,11 +39,13 @@ const nextPost = !posts[Astro.props.id + 1]
   ? posts[0]
   : posts[Astro.props.id + 1];
 
-const formattedDate = post.data.date.toLocaleDateString("en-UK", {
-  year: "numeric",
-  month: "short",
-  day: "numeric",
-});
+const formattedDate = post.data.date
+  ? post.data.date.toLocaleDateString("en-UK", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    })
+  : "";
 
 if (!post) throw new Error("No post found for this slug");
 
@@ -71,11 +73,12 @@ const thumbnail =
           date={post.data.date}
         />
         <h1 class="text-6xl font-bold mt-8 mb-4 text">{post.data.title}</h1>
-        <p class="text-lg w-3/4 mb-4 text-[var(--color-base-content-muted)]">{post.data.description}</p>
+        <p class="text-lg w-3/4 mb-4 text-[var(--color-base-content-muted)]">
+          {post.data.description}
+        </p>
         <div class="flex gap-2">
           {post.data.tags?.map((tag) => <Tag tag={tag} />)}
         </div>
-        
       </div>
     </section>
     {/* Thumbnail */}
@@ -130,30 +133,30 @@ const thumbnail =
   }
 
   @media (max-width: 900px) {
-        .content {
-            padding: 5rem 0;
-            width: 90%;
-        }
-
-        .content h1 {
-            font-size: 2.5rem;
-            margin-top: 1rem;
-        }
-
-        .content p {
-          width: 90%;
-        }
-
-        article {
-            width: 90%;
-            padding: 4rem 0;
-        }
-
-        .nav {
-            grid-template-rows: fit-content fit-content;
-            grid-template-columns: 1fr;
-            width: 90%;
-            padding: 0 0 4rem 0;
-        }
+    .content {
+      padding: 5rem 0;
+      width: 90%;
     }
+
+    .content h1 {
+      font-size: 2.5rem;
+      margin-top: 1rem;
+    }
+
+    .content p {
+      width: 90%;
+    }
+
+    article {
+      width: 90%;
+      padding: 4rem 0;
+    }
+
+    .nav {
+      grid-template-rows: fit-content fit-content;
+      grid-template-columns: 1fr;
+      width: 90%;
+      padding: 0 0 4rem 0;
+    }
+  }
 </style>
