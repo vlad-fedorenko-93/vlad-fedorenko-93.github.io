@@ -82,14 +82,18 @@ const thumbnail =
       </div>
     </section>
     {/* Thumbnail */}
-    <Image
-      src={thumbnail.default}
-      alt={post.data.title}
-      priority
-      fit="cover"
-      width={2000}
-      height={1000}
-    />
+    {
+      thumbnail && (
+        <Image
+          src={thumbnail.default}
+          alt={post.data.title}
+          priority
+          fit="cover"
+          width={2000}
+          height={1000}
+        />
+      )
+    }
     {/* Content */}
     <article class="m-auto pt-40 pb-8 w-3/5">
       <Content />
