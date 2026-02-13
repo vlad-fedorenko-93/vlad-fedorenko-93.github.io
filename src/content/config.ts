@@ -27,12 +27,5 @@ const portfolio = defineCollection({
   }),
 });
 
-const categories = defineCollection({
-  type: 'data',
-  schema: z.object({
-    name: z.string(),
-  })
-})
-
 // Export Collections
-export const collections = { posts, portfolio, categories };
+export const collections = { posts, portfolio };

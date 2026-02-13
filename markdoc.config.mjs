@@ -7,7 +7,13 @@ export default defineMarkdocConfig({
   tags: {
     callout: {
       render: component('./src/components/Callout.astro'),
-    }
+    },
+    video: {
+      render: component('./src/components/Video.astro'),
+      attributes: {
+        src: { type: String },
+      },
+    },
   },
   extends: [
     shiki({

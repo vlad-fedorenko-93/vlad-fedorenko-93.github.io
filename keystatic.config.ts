@@ -1,15 +1,17 @@
+import { component } from '@astrojs/markdoc/config';
 import { config, fields, collection } from '@keystatic/core';
-import { wrapper } from '@keystatic/core/content-components'
+import { wrapper } from '@keystatic/core/content-components';
+
 
 
 export default config({
   storage: {
+    // kind: 'local',
     kind: 'github',
     repo: {
       owner: 'vlad-fedorenko-93',
       name: 'vlad-fedorenko-93.github.io',
     }
-
   },
 
   collections: {
@@ -51,14 +53,21 @@ export default config({
               publicPath: '../../assets/images/posts/',
             },
           },
-          components: {
-            callout: wrapper({
-              label: 'Callout',
-              schema: {},
-            }),
-          },
-        }),
-      },
+          // components: {
+          //   video: block({
+          //     label: 'Video',
+          //     schema: {
+          //       src: fields.file({
+          //         label: 'Video File',
+          //         directory: 'src/assets/videos/portfolio',
+          //         publicPath: '../../assets/videos/portfolio',
+          //       }),
+          //     },
+          //   }),
+          // }
+
+        })
+      }
     }),
 
     // Portfolio case studies config 
@@ -81,9 +90,14 @@ export default config({
             label: 'Tags',
             itemLabel: props => props.value,
           }),
-        category: fields.relationship({
+        category: fields.select({
           label: 'Category',
-          collection: 'categories'
+          options: [
+            { label: 'Mobile', value: 'Mobile' },
+            { label: 'E-Commerce', value: 'E-commerce' },
+            { label: 'Library', value: 'Library' },
+          ],
+          defaultValue: 'Mobile',
         }),
         year: fields.date({
           label: 'Year',
@@ -105,20 +119,20 @@ export default config({
               publicPath: '../../assets/images/portfolio/',
             },
           },
-          
+          components: {
+            video: wrapper({
+              label: 'Video',
+              schema: {
+                src: fields.file({
+                  label: 'Video File',
+                  directory: 'public/videos/portfolio',
+                  publicPath: '../../../public/videos/portfolio',
+                }),
+              },
+            }),
+          },
         }),
       },
-    }),
-
-    // Project categories collection config
-    categories: collection({
-      label: 'Categories',
-      slugField: 'name',
-      path: 'src/content/categories/*',
-      format: { data: 'json' },
-      schema: {
-        name: fields.slug({ name: { label: 'Name' } })
-      }
     })
   },
-});
+})

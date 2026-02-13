@@ -16,7 +16,9 @@ export default defineConfig({
   build: {
     format: 'file',
   },
-  integrations: [react(), markdoc(), svelte(), process.env.NODE_ENV !== 'production' ? keystatic() : []].flat(),
+  integrations: [react(), markdoc({
+    
+  }), svelte(), process.env.NODE_ENV !== 'production' ? keystatic() : []].flat(),
   vite: {
     plugins: [tailwindcss()],
   },
