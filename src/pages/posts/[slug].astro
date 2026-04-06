@@ -1,5 +1,5 @@
 ---
-import { getCollection, getEntry } from "astro:content";
+import { getCollection, getEntry, render } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import Tag from "../../components/Tag.svelte";
 import NavButton from "../../components/NavButton.svelte";
@@ -14,7 +14,7 @@ export async function getStaticPaths() {
   // 2. Return an array of objects, where each object represents a page.
   //    The 'params' object must match the dynamic part of your filename ([slug]).
   return posts.map((post, index) => ({
-    params: { slug: post.slug },
+    params: { slug: post.id },
     props: { id: index },
   }));
 }
@@ -50,7 +50,7 @@ const formattedDate = post.data.date
 if (!post) throw new Error("No post found for this slug");
 
 // 4. Render the post content into a component
-const { Content } = await post.render();
+const { Content } = await render(post);
 
 // Thumbnail
 const thumbnailModules = import.meta.glob<{ default: ImageMetadata }>(
@@ -58,7 +58,7 @@ const thumbnailModules = import.meta.glob<{ default: ImageMetadata }>(
 );
 
 const thumbnailKey = Object.keys(thumbnailModules).find((path) =>
-  path.includes(`/posts/${post.slug}/thumbnail.`),
+  path.includes(`/posts/${post.id}/thumbnail.`),
 );
 
 const thumbnail = thumbnailKey

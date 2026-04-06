@@ -23,12 +23,12 @@ const portfolio = await getCollection("portfolio");
         {
           portfolio.map((caseStudy) => {
             const thumbnailKey = Object.keys(thumbnails).find((path) =>
-              path.includes(`/portfolio/${caseStudy.slug}/thumbnail.`),
+              path.includes(`/portfolio/${caseStudy.id}/thumbnail.`),
             );
             return (
               <CaseStudyItem
                 title={caseStudy.data.title}
-                slug={`/portfolio/${caseStudy.slug}`}
+                slug={`/portfolio/${caseStudy.id}`}
                 description={caseStudy.data.description}
               >
                 {thumbnailKey && (

@@ -6,7 +6,7 @@
                 Passionate to create interactive digital products.
             </h1>
             <p class="text-xl mb-4 text-[var(--color-base-content-muted)]">
-                With 7+ years of my carreer path, I have been involved with
+                With 7+ years of my career path, I have been involved with
                 crafting digital experiences that captivate and engage. During
                 my work process I focus on motion design, visual aesthetic and
                 and usability.

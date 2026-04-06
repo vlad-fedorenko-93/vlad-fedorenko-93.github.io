@@ -6,12 +6,12 @@ import { wrapper } from '@keystatic/core/content-components';
 
 export default config({
   storage: {
-    // kind: 'local',
-    kind: 'github',
-    repo: {
-      owner: 'vlad-fedorenko-93',
-      name: 'vlad-fedorenko-93.github.io',
-    }
+    kind: 'local',
+    // kind: 'github',
+    // repo: {
+    //   owner: 'vlad-fedorenko-93',
+    //   name: 'vlad-fedorenko-93.github.io',
+    // }
   },
 
   collections: {

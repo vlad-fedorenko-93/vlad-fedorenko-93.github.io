@@ -40,7 +40,7 @@
     a:hover {
         background-color: oklch(from var(--color-base-100) calc(l - 0.05) c h);
         z-index: 1;
-        border-radius: 12   px;
+        border-radius: 12px;
     }
 
     .thumbnail {

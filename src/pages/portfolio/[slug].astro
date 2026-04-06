@@ -1,5 +1,5 @@
 ---
-import { getCollection, getEntry } from "astro:content";
+import { getCollection, getEntry, render } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 import Tag from "../../components/Tag.svelte";
 import NavButton from "../../components/NavButton.svelte";
@@ -11,7 +11,7 @@ export async function getStaticPaths() {
     const portfolio = await getCollection("portfolio");
 
     return portfolio.map((caseStudy, index) => ({
-        params: { slug: caseStudy.slug },
+        params: { slug: caseStudy.id },
         props: { id: index },
     }));
 }
@@ -24,6 +24,7 @@ const { slug } = Astro.params;
 if (!slug) throw new Error("Slug not found");
 
 const caseStudy = await getEntry("portfolio", slug);
+if (!caseStudy) throw new Error("Case study not found");
 
 // Thumbnail
 const thumbnailModules = import.meta.glob<{ default: ImageMetadata }>(
@@ -31,7 +32,7 @@ const thumbnailModules = import.meta.glob<{ default: ImageMetadata }>(
 );
 const thumbnail =
     await thumbnailModules[
-        `../../assets/thumbnails/portfolio/${caseStudy.slug}/thumbnail.avif`
+        `../../assets/thumbnails/portfolio/${caseStudy.id}/thumbnail.avif`
     ]?.();
 
 // Previous and next case studies
@@ -43,13 +44,11 @@ const nextCaseStudy = !portfolio[Astro.props.id + 1]
     ? portfolio[0]
     : portfolio[Astro.props.id + 1];
 
-const formattedDate = caseStudy.data.year.toLocaleDateString("en-UK", {
-    year: "numeric",
-});
+const formattedDate = caseStudy.data.year
+    ? caseStudy.data.year.toLocaleDateString("en-UK", { year: "numeric" })
+    : "";
 
-if (!caseStudy) throw new Error("Case study not found");
-
-const { Content } = await caseStudy.render();
+const { Content } = await render(caseStudy);
 ---
 
 <Layout title={caseStudy.data.title}>
@@ -100,14 +99,16 @@ const { Content } = await caseStudy.render();
             </div>
         </section>
         {/* Thumbnail */}
-        <Image
-            src={thumbnail.default}
-            alt={caseStudy.data.title}
-            priority
-            fit="cover"
-            width={2000}
-            height={1125}
-        />
+        {thumbnail && (
+            <Image
+                src={thumbnail.default}
+                alt={caseStudy.data.title}
+                priority
+                fit="cover"
+                width={2000}
+                height={1125}
+            />
+        )}
         {/* Content */}
         <article class="m-auto py-32 w-4/5">
             <Content components={{ Video }} />

@@ -2,7 +2,7 @@
     let { title, label, slug } = $props()
 </script>
 
-<a class="hover:bg-slate-50 active:bg-slate-100 rounded p-4" href={slug}>
+<a class="rounded p-4" href={slug}>
     <p>{label}</p>
     <h4 class="text-xl font-bold">{title}</h4>
 </a>

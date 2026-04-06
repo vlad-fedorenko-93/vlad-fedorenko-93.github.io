@@ -44,14 +44,14 @@ const postThumbnails = import.meta.glob<{ default: ImageMetadata }>(
         {
           portfolioPreview.map((caseStudy) => {
             const thumbnailKey = Object.keys(portfolioThumbnails).find((path) =>
-              path.includes(`/portfolio/${caseStudy.slug}/thumbnail.`),
+              path.includes(`/portfolio/${caseStudy.id}/thumbnail.`),
             );
             return (
               <CaseStudyItem
                 title={caseStudy.data.title}
-                slug={`/portfolio/${caseStudy.slug}`}
+                slug={`/portfolio/${caseStudy.id}`}
                 description={caseStudy.data.description}
-                date={caseStudy.data.date}
+                date={caseStudy.data.year}
               >
                 {thumbnailKey && (
                   <Image
@@ -81,12 +81,12 @@ const postThumbnails = import.meta.glob<{ default: ImageMetadata }>(
         {
           postPreview.map((post) => {
             const thumbnailKey = Object.keys(postThumbnails).find((path) =>
-              path.includes(`/posts/${post.slug}/thumbnail.`),
+              path.includes(`/posts/${post.id}/thumbnail.`),
             );
             return (
               <CaseStudyItem
                 title={post.data.title}
-                slug={`/posts/${post.slug}`}
+                slug={`/posts/${post.id}`}
                 description={post.data.description}
                 date={post.data.date}
               >

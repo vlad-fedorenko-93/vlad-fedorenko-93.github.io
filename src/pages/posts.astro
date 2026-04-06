@@ -23,12 +23,12 @@ const posts = await getCollection("posts");
         {
           posts.map((post) => {
             const thumbnailKey = Object.keys(thumbnails).find((path) =>
-              path.includes(`/posts/${post.slug}/thumbnail.`),
+              path.includes(`/posts/${post.id}/thumbnail.`),
             );
             return (
               <BlogPost
                 title={post.data.title}
-                slug={`/posts/${post.slug}`}
+                slug={`/posts/${post.id}`}
                 description={post.data.description}
                 date={post.data.date}
               >
