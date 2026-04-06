@@ -39,13 +39,6 @@ const nextPost = !posts[Astro.props.id + 1]
   ? posts[0]
   : posts[Astro.props.id + 1];
 
-const formattedDate = post.data.date
-  ? post.data.date.toLocaleDateString("en-UK", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    })
-  : "";
 
 if (!post) throw new Error("No post found for this slug");
 
