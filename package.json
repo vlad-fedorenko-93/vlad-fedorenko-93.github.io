@@ -26,6 +26,11 @@
     "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3"
   },
+  "overrides": {
+    "@keystatic/astro": {
+      "astro": "$astro"
+    }
+  },
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
