@@ -53,19 +53,6 @@ export default config({
               publicPath: '../../assets/images/posts/',
             },
           },
-          // components: {
-          //   video: block({
-          //     label: 'Video',
-          //     schema: {
-          //       src: fields.file({
-          //         label: 'Video File',
-          //         directory: 'src/assets/videos/portfolio',
-          //         publicPath: '../../assets/videos/portfolio',
-          //       }),
-          //     },
-          //   }),
-          // }
-
         })
       }
     }),

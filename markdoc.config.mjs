@@ -5,9 +5,6 @@ import { addCopyButton } from 'shiki-transformer-copy-button'
 
 export default defineMarkdocConfig({
   tags: {
-    callout: {
-      render: component('./src/components/Callout.astro'),
-    },
     video: {
       render: component('./src/components/Video.astro'),
       attributes: {
