@@ -82,6 +82,7 @@ export default config({
           options: [
             { label: 'Mobile', value: 'Mobile' },
             { label: 'E-Commerce', value: 'E-commerce' },
+            { label: 'Landing Page', value: 'Landing Page' },
             { label: 'Library', value: 'Library' },
           ],
           defaultValue: 'Mobile',
