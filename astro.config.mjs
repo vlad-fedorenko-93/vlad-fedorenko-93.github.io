@@ -1,25 +1,36 @@
-import { defineConfig } from 'astro/config';
-import react from '@astrojs/react';
-import markdoc from '@astrojs/markdoc';
-import keystatic from '@keystatic/astro';
-import svelte from '@astrojs/svelte';
+import { defineConfig } from "astro/config";
+import react from "@astrojs/react";
+import markdoc from "@astrojs/markdoc";
+import keystatic from "@keystatic/astro";
+import svelte from "@astrojs/svelte";
 
-import tailwindcss from '@tailwindcss/vite'
+import tailwindcss from "@tailwindcss/vite";
+
+import cloudflare from "@astrojs/cloudflare";
 
 // https://astro.build/config
 export default defineConfig({
   optimizeDeps: {
-    exclude: ['@keystatic/astro'],
+    exclude: ["@keystatic/astro"],
   },
-  output: 'static',
-  site: 'https://vlad-fedorenko-93.github.io',
+
+  output: "server",
+  site: "https://vlad-fedorenko-93.github.io",
+
   build: {
-    format: 'file',
+    format: "directory",
   },
-  integrations: [react(), markdoc({
-    
-  }), svelte(), process.env.NODE_ENV !== 'production' ? keystatic() : []].flat(),
+
+  integrations: [
+    react(),
+    markdoc({}),
+    svelte(),
+    process.env.NODE_ENV !== "production" ? keystatic() : [],
+  ].flat(),
+
   vite: {
     plugins: [tailwindcss()],
   },
+
+  adapter: cloudflare(),
 });

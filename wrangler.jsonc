@@ -1,0 +1,12 @@
+{
+	"compatibility_date": "2026-04-29",
+	"compatibility_flags": ["global_fetch_strictly_public", "nodejs_compat"],
+	"name": "keystatic-templates-astro",
+	"assets": {
+		"directory": "./dist",
+		"binding": "ASSETS"
+	},
+	"observability": {
+		"enabled": true
+	}
+}
